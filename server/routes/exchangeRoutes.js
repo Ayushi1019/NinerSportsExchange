@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {isLoggedIn, isOwner} = require('../middleware/auth');
-const {validateId} = require('../middleware/validator');
+const {validateId,validateIdByQuery} = require('../middleware/validator');
 const {validateEquipment, validateResults} = require('../middleware/validator');
 
 const controller = require('../controller/exchangeController.js');
@@ -13,9 +13,7 @@ router.get('/equipments/:id', isLoggedIn, controller.equipments);
 
 router.get('/:id', validateId, controller.show);
 
-router.post('/:id', validateId, isLoggedIn, controller.watch);
-
-router.get('/:id/edit', validateId, isLoggedIn, isOwner, controller.edit);
+router.post('/:id/:user', validateId, isLoggedIn, controller.watch);
 
 router.post('/', isLoggedIn, validateEquipment, validateResults, controller.create);
 

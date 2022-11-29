@@ -2,7 +2,6 @@ const Equipments = require('../models/equipments');
 
 exports.isLoggedIn = (req,res,next)=>{
     let token = req.headers["authorization"];
-    console.log(token)
 	if(token){
         next();
     }
@@ -16,8 +15,9 @@ exports.isOwner = (req,res,next)=>{
     let headers = req.headers["authorization"]
     Equipments.findById(id)
     .then(equipments=>{
+        
         if(equipments && headers){
-            if(equipments.owner == token.split(" ")[1]){
+            if(equipments.owner && headers.split(" ")[1]){
                 next();
             }
             else{

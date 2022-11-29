@@ -4,8 +4,17 @@ const {validationResult} = require('express-validator');
 exports.validateId = (req,res,next) =>{
 	let id = req.params.id;
 	if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-		console.log(id)
-        // req.flash('error','Cannot find a equipment with id ' + id);
+		res.send({"message":"Invalid id"})
+    }
+    else{
+    	next();
+    }
+};
+
+exports.validateIdByQuery = (req,res,next) =>{
+	let id = req.query.id;
+	if(!id.match(/^[0-9a-fA-F]{24}$/)) {
+		res.send({"message":"Invalid id"})
     }
     else{
     	next();
